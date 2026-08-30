@@ -1,7 +1,7 @@
 /* =====================================================================
    DineEase — Global Stylesheet
-   A premium, modern restaurant aesthetic: deep navy/charcoal + warm gold,
-   set against off-white content areas.
+   Premium fine-dining aesthetic: deep burgundy + champagne gold,
+   set against warm ivory content areas.
    =====================================================================
    Sections:
    1. Global styles & variables
@@ -20,16 +20,16 @@
 
 :root {
     /* Core theme */
-    --primary: #14213d;      /* deep navy — headers, footer, dark surfaces */
-    --secondary: #1f3153;    /* lighter navy — hover states, sub-surfaces */
-    --gold: #c9a24a;         /* warm golden accent */
-    --gold-soft: #e7cf9a;    /* softer gold for hover/glow */
-    --light: #faf7f2;        /* off-white content background */
-    --dark: #10182a;         /* near-black navy for deepest surfaces */
-    --text: #262b33;         /* body text on light backgrounds */
-    --text-muted: #6b7280;
-    --text-on-dark: #eef1f6;
-    --border-light: #e8e2d6;
+    --primary: #5c1a2e;      /* deep burgundy — headers, footer, dark surfaces */
+    --secondary: #7a2740;    /* lighter burgundy — hover states, sub-surfaces */
+    --gold: #d9c2a3;         /* champagne accent */
+    --gold-soft: #ecdfc9;    /* softer champagne for hover/glow */
+    --light: #fbf6f2;        /* warm ivory content background */
+    --dark: #3a0f1c;         /* near-black burgundy for deepest surfaces */
+    --text: #2a1c20;         /* body text on light backgrounds */
+    --text-muted: #8a7570;
+    --text-on-dark: #f3e9e3;
+    --border-light: #ecdfd6;
 
     --font-display: 'Playfair Display', Georgia, serif;
     --font-body: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -37,8 +37,8 @@
     --radius-sm: 6px;
     --radius-md: 10px;
     --radius-lg: 18px;
-    --shadow-sm: 0 2px 10px rgba(20, 33, 61, 0.06);
-    --shadow-md: 0 8px 24px rgba(20, 33, 61, 0.10);
+    --shadow-sm: 0 2px 10px rgba(58, 15, 28, 0.07);
+    --shadow-md: 0 8px 24px rgba(58, 15, 28, 0.12);
     --transition: 200ms ease;
 }
 
@@ -188,13 +188,13 @@ button {
     bottom: 4px;
     width: 0;
     height: 2px;
-    background-color: var(--gold);
+    background-color: var(--primary);
     transition: width var(--transition) ease, left var(--transition) ease;
 }
 
 .nav-link:hover {
-    color: var(--gold);
-    background-color: rgba(201, 162, 74, 0.08);
+    color: var(--primary);
+    background-color: rgba(92, 26, 46, 0.06);
 }
 
 .nav-link:hover::after {
@@ -203,8 +203,10 @@ button {
 }
 
 .nav-link.active {
-    color: var(--gold);
+    color: var(--primary);
     font-weight: 600;
+    background-color: transparent;
+    box-shadow: none;
 }
 
 .nav-link.active::after {
@@ -414,7 +416,7 @@ button {
 }
 
 .btn-text:hover {
-    color: var(--gold);
+    color: var(--secondary);
 }
 
 .btn-gold {
