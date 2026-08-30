@@ -1,0 +1,219 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}DineEase | Fine Dining, Effortless Booking{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}DineEase — reserve a table, order online and explore our menu, all in one place.{% endblock %}">
+
+    <!-- Google Fonts: Playfair Display (headings) + Poppins (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap Icons (CDN) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- DineEase stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+    <!-- =============================== -->
+    <!-- NAVBAR                          -->
+    <!-- =============================== -->
+    <header class="site-header">
+        <nav class="navbar" id="navbar">
+            <div class="navbar-inner">
+
+                <!-- Brand -->
+                <a href="#" class="brand"> <!-- TODO: replace with url tag for 'home' once named -->
+                    <span class="brand-name">Dine<span class="brand-accent">Ease</span></span>
+                    <span class="brand-tagline">Taste &bull; Experience &bull; Enjoy</span>
+                </a>
+
+                <!-- Primary navigation -->
+                <!-- TODO: replace "#" hrefs below with the url tag once each app defines its URL names -->
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a></li>
+                    <li><a href="#" class="nav-link {% if request.resolver_match.url_name == 'menu' %}active{% endif %}">Menu</a></li>
+                    <li><a href="#" class="nav-link {% if request.resolver_match.url_name == 'reservations' %}active{% endif %}">Reservations</a></li>
+                    <li><a href="#" class="nav-link {% if request.resolver_match.url_name == 'orders' %}active{% endif %}">Orders</a></li>
+                    <li><a href="#" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a></li>
+                    <li><a href="#" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a></li>
+                </ul>
+
+                <!-- Right side actions -->
+                <div class="nav-actions">
+
+                    <button type="button" class="icon-btn" id="searchToggle" aria-label="Search">
+                        <i class="bi bi-search"></i>
+                    </button>
+
+                    <a href="#" class="icon-btn cart-btn" aria-label="Cart">
+                        <i class="bi bi-bag"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+
+                    {% if user.is_authenticated %}
+                        <div class="user-dropdown">
+                            <button type="button" class="user-dropdown-toggle" id="userDropdownToggle">
+                                <i class="bi bi-person-circle"></i>
+                                <span class="user-name">{{ user.first_name|default:user.username }}</span>
+                                <i class="bi bi-chevron-down dropdown-caret"></i>
+                            </button>
+                            <div class="user-dropdown-menu" id="userDropdownMenu">
+                                <a href="#"><i class="bi bi-person"></i> My Profile</a>
+                                <a href="#"><i class="bi bi-receipt"></i> My Orders</a>
+                                <a href="#"><i class="bi bi-calendar-check"></i> My Reservations</a>
+                                <hr>
+                                <a href="#"><i class="bi bi-box-arrow-right"></i> Logout</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="#" class="btn btn-text">Login</a>
+                        <a href="#" class="btn btn-gold">Register</a>
+                    {% endif %}
+                </div>
+
+                <!-- Mobile hamburger -->
+                <button type="button" class="hamburger" id="hamburgerBtn" aria-label="Toggle menu" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+
+            <!-- Mobile search bar -->
+            <div class="mobile-search" id="mobileSearch">
+                <form action="#" method="get" role="search">
+                    <input type="search" name="q" placeholder="Search dishes, categories...">
+                    <button type="submit"><i class="bi bi-search"></i></button>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+    <!-- =============================== -->
+    <!-- DJANGO MESSAGES                 -->
+    <!-- =============================== -->
+    {% if messages %}
+        <div class="messages-wrapper">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags|default:'info' }}">
+                    <span>{{ message }}</span>
+                    <button type="button" class="alert-close" aria-label="Dismiss">&times;</button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- =============================== -->
+    <!-- MAIN CONTENT                    -->
+    <!-- =============================== -->
+    <main class="site-main">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- =============================== -->
+    <!-- FOOTER                          -->
+    <!-- =============================== -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+
+            <div class="footer-col footer-brand">
+                <span class="footer-logo">Dine<span class="brand-accent">Ease</span></span>
+                <p>A modern take on the neighbourhood dining room — honest food, warm service and a table that's always ready when you are.</p>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="#" aria-label="Twitter / X"><i class="bi bi-twitter-x"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+                </div>
+            </div>
+
+            <!-- TODO: replace "#" hrefs below with the url tag once each app defines its URL names -->
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Menu</a></li>
+                    <li><a href="#">Reservations</a></li>
+                    <li><a href="#">Orders</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Information</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms &amp; Conditions</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <ul class="footer-contact">
+                    <li><i class="bi bi-geo-alt"></i> 123 Restaurant Street, Your City, 00000</li>
+                    <li><i class="bi bi-telephone"></i> +1 (000) 000-0000</li>
+                    <li><i class="bi bi-envelope"></i> hello@dineease.com</li>
+                    <li><i class="bi bi-clock"></i> Mon&ndash;Sun: 11:00 AM &ndash; 11:00 PM</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 DineEase. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Minimal inline behaviour for the navbar (mobile menu, search, dropdown). -->
+    <!-- Kept inline rather than a new static file, per "no unnecessary files". -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var hamburger   = document.getElementById('hamburgerBtn');
+            var navLinks    = document.getElementById('navLinks');
+            var navbar      = document.getElementById('navbar');
+            var searchBtn   = document.getElementById('searchToggle');
+            var mobileSearch = document.getElementById('mobileSearch');
+            var userToggle  = document.getElementById('userDropdownToggle');
+            var userMenu    = document.getElementById('userDropdownMenu');
+
+            if (hamburger && navLinks) {
+                hamburger.addEventListener('click', function () {
+                    var isOpen = navbar.classList.toggle('nav-open');
+                    hamburger.setAttribute('aria-expanded', isOpen);
+                });
+            }
+
+            if (searchBtn && mobileSearch) {
+                searchBtn.addEventListener('click', function () {
+                    mobileSearch.classList.toggle('open');
+                });
+            }
+
+            if (userToggle && userMenu) {
+                userToggle.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    userMenu.classList.toggle('open');
+                });
+                document.addEventListener('click', function () {
+                    userMenu.classList.remove('open');
+                });
+            }
+
+            document.querySelectorAll('.alert-close').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    btn.closest('.alert').remove();
+                });
+            });
+        });
+    </script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
