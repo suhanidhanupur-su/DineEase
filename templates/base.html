@@ -1,16 +1,20 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}DineEase | Fine Dining, Effortless Booking{% endblock %}</title>
-    <meta name="description" content="{% block meta_description %}DineEase — reserve a table, order online and explore our menu, all in one place.{% endblock %}">
+    <meta name="description"
+        content="{% block meta_description %}DineEase — reserve a table, order online and explore our menu, all in one place.{% endblock %}">
 
     <!-- Google Fonts: Playfair Display (headings) + Poppins (body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
     <!-- Bootstrap Icons (CDN) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -20,6 +24,7 @@
 
     {% block extra_head %}{% endblock %}
 </head>
+
 <body>
 
     <!-- =============================== -->
@@ -29,21 +34,33 @@
         <nav class="navbar" id="navbar">
             <div class="navbar-inner">
 
-                <!-- Brand -->
-                <a href="#" class="brand"> <!-- TODO: replace with url tag for 'home' once named -->
-                    <span class="brand-name">Dine<span class="brand-accent">Ease</span></span>
-                    <span class="brand-tagline">Taste &bull; Experience &bull; Enjoy</span>
-                </a>
+                <!-- nav-logo -->
+                {% load static %}
 
+                <a href="/" class="navbar-brand">
+                    <img src="{% static 'images/Loogoo.png' %}" alt="DineEase Logo" class="navbar-logo">
+                </a>
                 <!-- Primary navigation -->
                 <!-- TODO: replace "#" hrefs below with the url tag once each app defines its URL names -->
                 <ul class="nav-links" id="navLinks">
-                    <li><a href="#" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a></li>
-                    <li><a href="#" class="nav-link {% if request.resolver_match.url_name == 'menu' %}active{% endif %}">Menu</a></li>
-                    <li><a href="#" class="nav-link {% if request.resolver_match.url_name == 'reservations' %}active{% endif %}">Reservations</a></li>
-                    <li><a href="#" class="nav-link {% if request.resolver_match.url_name == 'orders' %}active{% endif %}">Orders</a></li>
-                    <li><a href="#" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a></li>
-                    <li><a href="#" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a></li>
+                    <li><a href="#"
+                            class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
+                    </li>
+                    <li><a href="#"
+                            class="nav-link {% if request.resolver_match.url_name == 'menu' %}active{% endif %}">Menu</a>
+                    </li>
+                    <li><a href="#"
+                            class="nav-link {% if request.resolver_match.url_name == 'reservations' %}active{% endif %}">Reservations</a>
+                    </li>
+                    <li><a href="#"
+                            class="nav-link {% if request.resolver_match.url_name == 'orders' %}active{% endif %}">Orders</a>
+                    </li>
+                    <li><a href="#"
+                            class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a>
+                    </li>
+                    <li><a href="#"
+                            class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+                    </li>
                 </ul>
 
                 <!-- Right side actions -->
@@ -59,28 +76,29 @@
                     </a>
 
                     {% if user.is_authenticated %}
-                        <div class="user-dropdown">
-                            <button type="button" class="user-dropdown-toggle" id="userDropdownToggle">
-                                <i class="bi bi-person-circle"></i>
-                                <span class="user-name">{{ user.first_name|default:user.username }}</span>
-                                <i class="bi bi-chevron-down dropdown-caret"></i>
-                            </button>
-                            <div class="user-dropdown-menu" id="userDropdownMenu">
-                                <a href="#"><i class="bi bi-person"></i> My Profile</a>
-                                <a href="#"><i class="bi bi-receipt"></i> My Orders</a>
-                                <a href="#"><i class="bi bi-calendar-check"></i> My Reservations</a>
-                                <hr>
-                                <a href="#"><i class="bi bi-box-arrow-right"></i> Logout</a>
-                            </div>
+                    <div class="user-dropdown">
+                        <button type="button" class="user-dropdown-toggle" id="userDropdownToggle">
+                            <i class="bi bi-person-circle"></i>
+                            <span class="user-name">{{ user.first_name|default:user.username }}</span>
+                            <i class="bi bi-chevron-down dropdown-caret"></i>
+                        </button>
+                        <div class="user-dropdown-menu" id="userDropdownMenu">
+                            <a href="#"><i class="bi bi-person"></i> My Profile</a>
+                            <a href="#"><i class="bi bi-receipt"></i> My Orders</a>
+                            <a href="#"><i class="bi bi-calendar-check"></i> My Reservations</a>
+                            <hr>
+                            <a href="#"><i class="bi bi-box-arrow-right"></i> Logout</a>
                         </div>
+                    </div>
                     {% else %}
-                        <a href="#" class="btn btn-text">Login</a>
-                        <a href="#" class="btn btn-gold">Register</a>
+                    <a href="#" class="btn btn-text">Login</a>
+                    <a href="#" class="btn btn-gold">Register</a>
                     {% endif %}
                 </div>
 
                 <!-- Mobile hamburger -->
-                <button type="button" class="hamburger" id="hamburgerBtn" aria-label="Toggle menu" aria-expanded="false">
+                <button type="button" class="hamburger" id="hamburgerBtn" aria-label="Toggle menu"
+                    aria-expanded="false">
                     <span></span><span></span><span></span>
                 </button>
             </div>
@@ -99,14 +117,14 @@
     <!-- DJANGO MESSAGES                 -->
     <!-- =============================== -->
     {% if messages %}
-        <div class="messages-wrapper">
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags|default:'info' }}">
-                    <span>{{ message }}</span>
-                    <button type="button" class="alert-close" aria-label="Dismiss">&times;</button>
-                </div>
-            {% endfor %}
+    <div class="messages-wrapper">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags|default:'info' }}">
+            <span>{{ message }}</span>
+            <button type="button" class="alert-close" aria-label="Dismiss">&times;</button>
         </div>
+        {% endfor %}
+    </div>
     {% endif %}
 
     <!-- =============================== -->
@@ -125,7 +143,8 @@
 
             <div class="footer-col footer-brand">
                 <span class="footer-logo">Dine<span class="brand-accent">Ease</span></span>
-                <p>A modern take on the neighbourhood dining room — honest food, warm service and a table that's always ready when you are.</p>
+                <p>A modern take on the neighbourhood dining room — honest food, warm service and a table that's always
+                    ready when you are.</p>
                 <div class="social-icons">
                     <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
                     <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
@@ -176,13 +195,13 @@
     <!-- Kept inline rather than a new static file, per "no unnecessary files". -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var hamburger   = document.getElementById('hamburgerBtn');
-            var navLinks    = document.getElementById('navLinks');
-            var navbar      = document.getElementById('navbar');
-            var searchBtn   = document.getElementById('searchToggle');
+            var hamburger = document.getElementById('hamburgerBtn');
+            var navLinks = document.getElementById('navLinks');
+            var navbar = document.getElementById('navbar');
+            var searchBtn = document.getElementById('searchToggle');
             var mobileSearch = document.getElementById('mobileSearch');
-            var userToggle  = document.getElementById('userDropdownToggle');
-            var userMenu    = document.getElementById('userDropdownMenu');
+            var userToggle = document.getElementById('userDropdownToggle');
+            var userMenu = document.getElementById('userDropdownMenu');
 
             if (hamburger && navLinks) {
                 hamburger.addEventListener('click', function () {
@@ -216,4 +235,5 @@
     </script>
     {% block extra_scripts %}{% endblock %}
 </body>
+
 </html>

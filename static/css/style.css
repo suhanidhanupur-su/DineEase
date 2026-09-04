@@ -131,35 +131,26 @@ button {
     gap: 32px;
 }
 
-/* Brand */
-.brand {
+/* nav-logo */
+.navbar-brand {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    line-height: 1.1;
-    margin-right: 8px;
+    height: 100%;
     flex-shrink: 0;
+    overflow: hidden;
+    padding: 0 8px;
 }
 
-.brand-name {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.6rem;
-    color: var(--primary);
-    letter-spacing: 0.3px;
-}
-
-.brand-accent {
-    color: var(--gold);
-}
-
-.brand-tagline {
-    font-size: 0.68rem;
-    letter-spacing: 1.6px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    font-weight: 500;
-    margin-top: 2px;
+.navbar-logo {
+    display: block;
+    width: 160px;
+    height: 64px;
+    max-width: 160px !important;
+    max-height: 64px !important;
+    object-fit: contain;
+    object-position: center;
+    flex-shrink: 0;
 }
 
 /* Primary nav links */
