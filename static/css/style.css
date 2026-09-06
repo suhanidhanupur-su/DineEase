@@ -487,6 +487,18 @@ button {
     background-color: var(--light);
 }
 
+.home-banner {
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--light);
+}
+
+.home-banner-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
 
 /* ---------------------------------------------------------------------
    6. FOOTER
