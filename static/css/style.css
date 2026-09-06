@@ -499,6 +499,132 @@ button {
     display: block;
 }
 
+.popular-dishes {
+    padding: 88px 0 96px;
+    background-color: var(--light);
+    overflow: hidden;
+}
+
+.section-heading {
+    max-width: 680px;
+    margin: 0 auto 42px;
+    text-align: center;
+}
+
+.section-heading span {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--primary);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.section-heading h2 {
+    margin-bottom: 12px;
+    color: var(--dark);
+    font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.section-heading p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.dishes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+}
+
+.dish-card {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    background-color: #fffdfb;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.dish-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.dish-image {
+    width: 100%;
+    height: 220px;
+    display: block;
+    object-fit: cover;
+}
+
+.dish-image-fallback {
+    position: relative;
+    background: linear-gradient(135deg, #ead3bd, #f8e9d8);
+}
+
+.dish-image-fallback::after {
+    content: "DineEase";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: rgba(43, 24, 16, 0.32);
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-style: italic;
+}
+
+.dish-content {
+    padding: 24px;
+}
+
+.dish-content h3 {
+    margin-bottom: 8px;
+    color: var(--dark);
+    font-size: 1.35rem;
+}
+
+.dish-content > p {
+    min-height: 52px;
+    margin-bottom: 20px;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    line-height: 1.7;
+}
+
+.dish-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.dish-bottom strong {
+    color: var(--primary);
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.dish-bottom button {
+    flex-shrink: 0;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    background-color: var(--primary);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: background-color var(--transition), transform var(--transition);
+}
+
+.dish-bottom button:hover {
+    background-color: var(--secondary);
+    transform: translateY(-1px);
+}
+
 
 /* ---------------------------------------------------------------------
    6. FOOTER
@@ -618,6 +744,10 @@ button {
         grid-template-columns: 1fr 1fr;
         row-gap: 36px;
     }
+
+    .dishes-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 @media (max-width: 900px) {
@@ -706,6 +836,23 @@ button {
 
     .container {
         padding: 0 16px;
+    }
+
+    .popular-dishes {
+        padding: 64px 0 72px;
+    }
+
+    .dishes-grid {
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+
+    .dish-content > p {
+        min-height: 0;
+    }
+
+    .dish-bottom button {
+        padding: 10px 14px;
     }
 
     .btn-gold {

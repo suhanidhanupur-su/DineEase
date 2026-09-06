@@ -135,6 +135,44 @@
         {% endblock %}
     </main>
 
+    <!-- card section -->
+     <section class="popular-dishes">
+    <div class="container">
+
+        <div class="section-heading">
+            <span>OUR SPECIALTIES</span>
+            <h2>Popular Dishes</h2>
+            <p>
+                Discover our most loved dishes, freshly prepared with quality ingredients.
+            </p>
+        </div>
+
+        <div class="dishes-grid">
+            {% for dish in popular_dishes %}
+            <div class="dish-card">
+                {% if dish.image %}
+                <img src="{{ dish.image.url }}" alt="{{ dish.name }}" class="dish-image">
+                {% else %}
+                <div class="dish-image dish-image-fallback" role="img" aria-label="{{ dish.name }}"></div>
+                {% endif %}
+
+                <div class="dish-content">
+                    <h3>{{ dish.name }}</h3>
+                    <p>{{ dish.description }}</p>
+                    <div class="dish-bottom">
+                        <strong>₹{{ dish.price|floatformat:0 }}</strong>
+                        <button type="button">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="dish-empty">No popular dishes are available yet.</p>
+            {% endfor %}
+        </div>
+
+    </div>
+</section>
+
     <!-- =============================== -->
     <!-- FOOTER                          -->
     <!-- =============================== -->
