@@ -71,9 +71,9 @@
                         <i class="bi bi-search"></i>
                     </button>
 
-                    <a href="#" class="icon-btn cart-btn" aria-label="Cart">
+                    <a href="{% url 'cart' %}" class="icon-btn cart-btn" aria-label="Cart">
                         <i class="bi bi-bag"></i>
-                        <span class="cart-count">0</span>
+                        <span class="cart-count">{{ request.session.cart|length|default:0 }}</span>
                     </a>
 
                     {% if user.is_authenticated %}
@@ -162,7 +162,12 @@
                     <p>{{ dish.description }}</p>
                     <div class="dish-bottom">
                         <strong>₹{{ dish.price|floatformat:0 }}</strong>
-                        <button type="button">Add to Cart</button>
+                        <form action="{% url 'add_to_cart' %}" method="post" class="dish-cart-form">
+                            {% csrf_token %}
+                            <input type="hidden" name="menu_id" value="{{ dish.id }}">
+                            <input type="hidden" name="quantity" value="1">
+                            <button type="submit">Add to Cart</button>
+                        </form>
                     </div>
                 </div>
             </div>

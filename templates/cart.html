@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Cart | DineEase{% endblock %}
+
+{% block content %}
+<section class="cart-page">
+    <div class="container">
+        <h2>Your Cart</h2>
+
+        {% if cart_items %}
+        <div class="cart-table-wrap">
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>Food Item</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.food_name }}</td>
+                        <td>₹{{ item.price }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>₹{{ item.subtotal }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="cart-summary">
+            <strong>Total: ₹{{ total }}</strong>
+        </div>
+        {% else %}
+        <div class="cart-empty">
+            <p>Your cart is empty.</p>
+            <a href="{% url 'home' %}" class="btn btn-gold">Continue Shopping</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
