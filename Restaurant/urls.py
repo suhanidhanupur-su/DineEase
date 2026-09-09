@@ -24,11 +24,15 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import include, path
-from menu.views import home
+
+from menu.views import home, menu_view
+from reservations.views import reservations_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
+    path('menu/', menu_view, name='menu'),
+    path('reservations/', reservations_view, name='reservations'),
     path('orders/', include('orders.urls')),
 ]
 

@@ -2,9 +2,44 @@
 {% load static %}
 {% block title %}Home | DineEase{% endblock %}
 {% block content %}
-    <section class="home-banner" aria-label="DineEase restaurant promotion">
-        <img src="{% static 'images/Banner.png' %}"
-            alt="Good food, good mood at DineEase. Discover delicious food, beautiful moments, and special offers."
-            class="home-banner-image">
-    </section>
+<section class="home-hero" aria-label="DineEase restaurant promotion">
+    <div class="home-hero-inner container">
+        <div class="home-hero-content">
+            <p class="home-hero-kicker">GOOD FOOD, GOOD MOOD</p>
+            <h1 class="home-hero-title">
+                Delicious Food,<br>
+                Beautiful Moments
+            </h1>
+            <p class="home-hero-description">
+                Discover a delightful blend of flavors, crafted with love and the finest ingredients. Every bite is an experience.
+            </p>
+
+            <div class="home-hero-actions">
+                <a href="{% url 'menu' %}" class="home-hero-btn home-hero-btn-primary" aria-label="Explore our menu">
+                    <span>EXPLORE OUR MENU</span>
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+                <a href="{% url 'reservations' %}" class="home-hero-btn home-hero-btn-secondary" aria-label="Book a table">
+                    <i class="bi bi-calendar-check"></i>
+                    <span>BOOK A TABLE</span>
+                </a>
+            </div>
+
+            <div class="home-hero-features" aria-label="Key restaurant highlights">
+                <div class="home-hero-feature">
+                    <i class="bi bi-star-fill"></i>
+                    <span>15+ Signature Dishes</span>
+                </div>
+                <div class="home-hero-feature">
+                    <i class="bi bi-people-fill"></i>
+                    <span>500+ Happy Customers</span>
+                </div>
+                <div class="home-hero-feature">
+                    <i class="bi bi-hand-thumbs-up-fill"></i>
+                    <span>4.8 Customer Rating</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
