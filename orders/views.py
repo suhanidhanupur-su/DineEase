@@ -57,6 +57,50 @@ def add_to_cart(request):
     return redirect('cart')
 
 
+@require_POST
+def update_cart_quantity(request):
+    product_id = request.POST.get('product_id')
+    quantity = request.POST.get('quantity', '1')
+
+    if not product_id:
+        return redirect('cart')
+
+    try:
+        quantity = int(quantity)
+    except (TypeError, ValueError):
+        quantity = 1
+
+    cart = _get_cart(request)
+    item_key = str(product_id)
+
+    if item_key in cart:
+        if quantity <= 0:
+            cart.pop(item_key, None)
+        else:
+            cart[item_key]['quantity'] = quantity
+            cart[item_key]['subtotal'] = str(
+                Decimal(str(cart[item_key]['price'])) * Decimal(quantity)
+            )
+
+    request.session['cart'] = cart
+    request.session.modified = True
+    return redirect('cart')
+
+
+@require_POST
+def remove_cart_item(request):
+    product_id = request.POST.get('product_id')
+
+    if not product_id:
+        return redirect('cart')
+
+    cart = _get_cart(request)
+    cart.pop(str(product_id), None)
+    request.session['cart'] = cart
+    request.session.modified = True
+    return redirect('cart')
+
+
 def cart_view(request):
     cart = request.session.get('cart', {})
     cart_items = []
@@ -70,16 +114,27 @@ def cart_view(request):
         if quantity <= 0:
             continue
 
+        menu_item = Menu.objects.filter(pk=item_id).first()
+        image_url = menu_item.image.url if menu_item and menu_item.image else ''
+        description = menu_item.description if menu_item else item.get('description', '')
+
         cart_items.append({
             'id': item_id,
             'food_name': item.get('food_name', 'Menu item'),
+            'description': description,
             'price': price,
             'quantity': quantity,
             'subtotal': subtotal,
+            'image_url': image_url,
         })
         total += subtotal
+
+    delivery_fee = Decimal('49.00') if total > 0 else Decimal('0.00')
+    grand_total = total + delivery_fee
 
     return render(request, 'cart.html', {
         'cart_items': cart_items,
         'total': total,
+        'delivery_fee': delivery_fee,
+        'grand_total': grand_total,
     })

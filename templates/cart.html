@@ -1,43 +1,105 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Your Cart | DineEase{% endblock %}
 
 {% block content %}
 <section class="cart-page">
-    <div class="container">
-        <h2>Your Cart</h2>
+    <div class="cart-container">
+        <div class="cart-page-header">
+            <p class="cart-page-kicker">Freshly packed</p>
+            <h2>Your Cart</h2>
+            <p class="cart-page-subtitle">Review your selected dishes before placing your order.</p>
+        </div>
 
         {% if cart_items %}
-        <div class="cart-table-wrap">
-            <table class="cart-table">
-                <thead>
-                    <tr>
-                        <th>Food Item</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Subtotal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in cart_items %}
-                    <tr>
-                        <td>{{ item.food_name }}</td>
-                        <td>₹{{ item.price }}</td>
-                        <td>{{ item.quantity }}</td>
-                        <td>₹{{ item.subtotal }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <div class="cart-layout">
+            <div class="cart-items">
+                {% for item in cart_items %}
+                <article class="cart-item-card">
+                    <div class="cart-item-media">
+                        {% if item.image_url %}
+                        <img src="{{ item.image_url }}" alt="{{ item.food_name }}" class="cart-item-image">
+                        {% else %}
+                        <div class="cart-item-image cart-item-image-fallback" aria-label="{{ item.food_name }}"></div>
+                        {% endif %}
+                    </div>
+
+                    <div class="cart-item-body">
+                        <div class="cart-item-header">
+                            <div>
+                                <h3 class="cart-item-name">{{ item.food_name }}</h3>
+                                {% if item.description %}
+                                <p class="cart-item-description">{{ item.description|truncatechars:90 }}</p>
+                                {% endif %}
+                            </div>
+                            <div class="cart-item-price">₹{{ item.price }}</div>
+                        </div>
+
+                        <div class="cart-item-footer">
+                            <div class="quantity-control" aria-label="Quantity selector for {{ item.food_name }}">
+                                <form method="post" action="{% url 'update_cart_quantity' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="product_id" value="{{ item.id }}">
+                                    <input type="hidden" name="quantity" value="{{ item.quantity|add:'-1' }}">
+                                    <button type="submit" class="quantity-btn" aria-label="Decrease quantity for {{ item.food_name }}">−</button>
+                                </form>
+
+                                <span class="quantity-value">{{ item.quantity }}</span>
+
+                                <form method="post" action="{% url 'update_cart_quantity' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="product_id" value="{{ item.id }}">
+                                    <input type="hidden" name="quantity" value="{{ item.quantity|add:'1' }}">
+                                    <button type="submit" class="quantity-btn" aria-label="Increase quantity for {{ item.food_name }}">+</button>
+                                </form>
+                            </div>
+
+                            <div class="cart-item-summary">
+                                <span class="cart-item-subtotal">₹{{ item.subtotal }}</span>
+                                <form method="post" action="{% url 'remove_cart_item' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="product_id" value="{{ item.id }}">
+                                    <button type="submit" class="cart-item-remove">Remove</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+
+            <aside class="cart-summary-card" aria-label="Order summary">
+                <h3>Order Summary</h3>
+
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <strong>₹{{ total }}</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Delivery Fee</span>
+                    <strong>₹{{ delivery_fee }}</strong>
+                </div>
+                <div class="summary-divider"></div>
+                <div class="summary-row summary-total">
+                    <span>Total</span>
+                    <strong>₹{{ grand_total }}</strong>
+                </div>
+
+                <button type="button" class="checkout-btn">PROCEED TO CHECKOUT</button>
+                <p class="checkout-note">Secure checkout • Freshly prepared • Fast delivery</p>
+            </aside>
         </div>
 
-        <div class="cart-summary">
-            <strong>Total: ₹{{ total }}</strong>
+        <div class="cart-footer-actions">
+            <a href="{% url 'menu' %}" class="continue-shopping-link">← Continue Shopping</a>
         </div>
         {% else %}
-        <div class="cart-empty">
-            <p>Your cart is empty.</p>
-            <a href="{% url 'home' %}" class="btn btn-gold">Continue Shopping</a>
+        <div class="empty-cart">
+            <div class="empty-cart-icon" aria-hidden="true"><i class="bi bi-bag"></i></div>
+            <h3>Your Cart is Empty</h3>
+            <p>Looks like you haven't added any delicious dishes yet.</p>
+            <a href="{% url 'menu' %}" class="empty-cart-btn">EXPLORE MENU</a>
         </div>
         {% endif %}
     </div>
