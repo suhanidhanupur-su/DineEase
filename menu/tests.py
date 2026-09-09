@@ -1,6 +1,8 @@
 from django.test import TestCase
 from django.urls import reverse
 
+from menu.models import Menu
+
 
 class HomeHeroAndRouteTests(TestCase):
     def test_home_page_has_premium_hero_content(self):
@@ -21,3 +23,37 @@ class HomeHeroAndRouteTests(TestCase):
         self.assertEqual(reverse('reservations'), '/reservations/')
         self.assertEqual(self.client.get(reverse('menu')).status_code, 200)
         self.assertEqual(self.client.get(reverse('reservations')).status_code, 200)
+
+    def test_menu_page_loads_dynamic_dishes_and_categories(self):
+        Menu.objects.create(
+            name='Truffle Pasta',
+            description='Creamy truffle pasta with parmesan.',
+            price='499.00',
+            category='Pasta',
+            is_available=True,
+        )
+        Menu.objects.create(
+            name='Crispy Tacos',
+            description='Fresh tacos with zesty salsa.',
+            price='299.00',
+            category='Starters',
+            is_available=True,
+        )
+        Menu.objects.create(
+            name='Classic Cheesecake',
+            description='Velvety cheesecake with berry compote.',
+            price='249.00',
+            category='Desserts',
+            is_available=False,
+        )
+
+        response = self.client.get(reverse('menu'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Explore Our Menu')
+        self.assertContains(response, 'Truffle Pasta')
+        self.assertContains(response, 'Crispy Tacos')
+        self.assertNotContains(response, 'Classic Cheesecake')
+        self.assertContains(response, 'All')
+        self.assertContains(response, 'Pasta')
+        self.assertContains(response, 'Starters')

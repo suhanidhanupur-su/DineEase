@@ -9,5 +9,22 @@ def home(request):
 
 
 def menu_view(request):
+    selected_category = request.GET.get('category', '').strip()
     dishes = Menu.objects.filter(is_available=True)
-    return render(request, 'menu.html', {'dishes': dishes})
+
+    if selected_category:
+        dishes = dishes.filter(category__iexact=selected_category)
+
+    categories = (
+        Menu.objects.filter(is_available=True)
+        .exclude(category='')
+        .values_list('category', flat=True)
+        .distinct()
+        .order_by('category')
+    )
+
+    return render(request, 'menu.html', {
+        'dishes': dishes,
+        'categories': categories,
+        'selected_category': selected_category,
+    })
