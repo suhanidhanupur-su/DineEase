@@ -44,3 +44,9 @@ class CartSessionTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Butter Chicken')
         self.assertContains(response, '299.00')
+        self.assertContains(response, 'Your Cart')
+        self.assertContains(response, 'Order Summary')
+
+    def test_cart_quantity_and_remove_routes_exist(self):
+        self.assertEqual(reverse('update_cart_quantity'), '/orders/update-quantity/')
+        self.assertEqual(reverse('remove_cart_item'), '/orders/remove-item/')
