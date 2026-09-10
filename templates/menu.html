@@ -8,18 +8,30 @@
     <div class="menu-container">
         <header class="menu-hero">
             <p class="menu-kicker">OUR MENU</p>
-            <h1>Explore Our Menu</h1>
-            <p class="menu-subtitle">Discover delicious dishes prepared with fresh ingredients and served with love.</p>
+            <h1>Our Menu</h1>
+            <p class="menu-subtitle">Explore our delicious selection of freshly prepared dishes, crafted to make every meal memorable.</p>
         </header>
 
-        {% if categories %}
-        <nav class="menu-categories" aria-label="Menu categories">
-            <a href="{% url 'menu' %}" class="menu-category-btn {% if not selected_category %}active{% endif %}">All</a>
-            {% for category in categories %}
-            <a href="{% url 'menu' %}?category={{ category|urlencode }}" class="menu-category-btn {% if selected_category == category %}active{% endif %}">{{ category }}</a>
-            {% endfor %}
-        </nav>
-        {% endif %}
+        <div class="menu-controls" aria-label="Menu controls">
+            <form method="get" action="{% url 'menu' %}" class="menu-search-form">
+                <div class="menu-search-wrap">
+                    <i class="bi bi-search menu-search-icon" aria-hidden="true"></i>
+                    <input type="search" name="q" value="{{ search_query }}" class="menu-search" placeholder="Search dishes..." aria-label="Search dishes">
+                </div>
+                {% if selected_category %}
+                    <input type="hidden" name="category" value="{{ selected_category }}">
+                {% endif %}
+            </form>
+
+            {% if categories %}
+            <nav class="menu-categories" aria-label="Menu categories">
+                <a href="{% url 'menu' %}{% if search_query %}?q={{ search_query|urlencode }}{% endif %}" class="menu-category-btn {% if not selected_category %}active{% endif %}">All</a>
+                {% for category in categories %}
+                <a href="{% url 'menu' %}?{% if search_query %}q={{ search_query|urlencode }}&{% endif %}category={{ category|urlencode }}" class="menu-category-btn {% if selected_category == category %}active{% endif %}">{{ category }}</a>
+                {% endfor %}
+            </nav>
+            {% endif %}
+        </div>
 
         {% if dishes %}
         <div class="menu-grid">
@@ -42,6 +54,10 @@
                         <span class="menu-card-price">₹{{ item.price }}</span>
                     </div>
 
+                    {% if item.category %}
+                    <p class="menu-card-category">{{ item.category }}</p>
+                    {% endif %}
+
                     {% if item.description %}
                     <p class="menu-card-description">{{ item.description }}</p>
                     {% endif %}
@@ -52,10 +68,10 @@
                             {% csrf_token %}
                             <input type="hidden" name="menu_id" value="{{ item.id }}">
                             <input type="hidden" name="quantity" value="1">
-                            <button type="submit" class="add-to-cart-btn">ADD TO CART</button>
+                            <button type="submit" class="add-to-cart-btn">Add to Cart</button>
                         </form>
                         {% else %}
-                        <button type="button" class="add-to-cart-btn add-to-cart-btn-disabled" disabled>UNAVAILABLE</button>
+                        <button type="button" class="add-to-cart-btn add-to-cart-btn-disabled" disabled>Currently Unavailable</button>
                         {% endif %}
                     </div>
                 </div>
@@ -65,9 +81,9 @@
         {% else %}
         <div class="empty-menu">
             <div class="empty-menu-icon" aria-hidden="true"><i class="bi bi-basket2"></i></div>
-            <h2>No dishes available yet.</h2>
-            <p>Please check back soon for our delicious menu.</p>
-            <a href="{% url 'home' %}" class="empty-menu-btn">EXPLORE HOME</a>
+            <h2>No dishes available right now</h2>
+            <p>Please check back soon for our latest menu.</p>
+            <a href="{% url 'home' %}" class="empty-menu-btn">Explore Home</a>
         </div>
         {% endif %}
     </div>

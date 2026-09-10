@@ -50,10 +50,34 @@ class HomeHeroAndRouteTests(TestCase):
         response = self.client.get(reverse('menu'))
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Explore Our Menu')
+        self.assertContains(response, 'Our Menu')
+        self.assertContains(response, 'Explore our delicious selection of freshly prepared dishes, crafted to make every meal memorable.')
         self.assertContains(response, 'Truffle Pasta')
         self.assertContains(response, 'Crispy Tacos')
         self.assertNotContains(response, 'Classic Cheesecake')
         self.assertContains(response, 'All')
         self.assertContains(response, 'Pasta')
         self.assertContains(response, 'Starters')
+
+    def test_menu_search_filters_dishes_by_keyword(self):
+        Menu.objects.create(
+            name='Truffle Pasta',
+            description='Creamy truffle pasta with parmesan.',
+            price='499.00',
+            category='Pasta',
+            is_available=True,
+        )
+        Menu.objects.create(
+            name='Crispy Tacos',
+            description='Fresh tacos with zesty salsa.',
+            price='299.00',
+            category='Starters',
+            is_available=True,
+        )
+
+        response = self.client.get(reverse('menu'), {'q': 'taco'})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Search dishes...')
+        self.assertContains(response, 'Crispy Tacos')
+        self.assertNotContains(response, 'Truffle Pasta')
