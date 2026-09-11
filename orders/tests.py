@@ -3,7 +3,6 @@ from django.urls import reverse
 
 from menu.models import Menu
 
-
 class CartSessionTests(TestCase):
     def setUp(self):
         self.menu_item = Menu.objects.create(
