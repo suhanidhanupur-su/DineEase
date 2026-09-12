@@ -49,3 +49,4 @@ class CartSessionTests(TestCase):
     def test_cart_quantity_and_remove_routes_exist(self):
         self.assertEqual(reverse('update_cart_quantity'), '/orders/update-quantity/')
         self.assertEqual(reverse('remove_cart_item'), '/orders/remove-item/')
+
